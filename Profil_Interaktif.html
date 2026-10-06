@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Profile Interaktif</title>
+
+  <!-- Menghubungkan jQuery lewat CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(135deg, #e8eefb, #f6f9ff);
+      margin: 0;
+      padding: 48px 16px;
+      color: #12263f;
+    }
+
+    /* Kartu landscape: ukuran tetap, jadi tidak "loncat" saat form muncul */
+    .kartu {
+      display: flex;
+      flex-wrap: wrap;
+      width: fit-content;
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 40px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 4px 18px rgba(30, 60, 114, 0.12);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    /* Kiri: profil */
+    .kiri { width: 290px; max-width: 100%; }
+    .atas { display: flex; align-items: center; gap: 18px; margin-bottom: 20px; }
+    .avatar {
+      width: 84px; height: 84px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e3c72, #3b6fd1);
+      color: #fff;
+      font-size: 28px; font-weight: bold;
+      text-align: center; line-height: 84px;
+      box-shadow: 0 4px 10px rgba(30, 60, 114, 0.3);
+    }
+    h1 { margin: 0 0 4px; font-size: 24px; }
+    #jabatan { margin: 0; color: #3b6fd1; }
+    .info { margin: 8px 0; color: #44546a; }
+
+    .tombol { display: flex; flex-direction: column; gap: 10px; margin-top: 24px; }
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 12px;
+      background: #eaf0fb;
+      color: #1e3c72;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.25s, color 0.25s, transform 0.2s;
+    }
+    button:hover { background: #d6e3f8; transform: translateX(3px); }
+    button.aktif { background: #1e3c72; color: #fff; }
+
+    /* Kanan: lebarnya 0 dulu, melebar ke samping saat tombol diklik */
+    .kanan { width: 0; max-width: 100%; flex-shrink: 0; overflow: hidden; }
+    .isi { display: none; width: 376px; max-width: 100%; padding: 4px 4px 4px 36px; }
+    h2 { margin: 4px 0 16px; font-size: 18px; }
+
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 12px 16px;
+      margin-top: 12px;
+      border: 1px solid #c4d3ea;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: inherit;
+      background: #f9fbff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus, textarea:focus {
+      outline: none; border-color: #3b6fd1; box-shadow: 0 0 0 3px rgba(59, 111, 209, 0.2);
+    }
+    .isi input:first-of-type { margin-top: 0; }
+    textarea { resize: none; }
+
+    .btn-utama { margin-top: 16px; background: #1e3c72; color: #fff; text-align: center; }
+    .btn-utama:hover { background: #3b6fd1; transform: none; }
+    .btn-abu { margin-top: 16px; margin-left: 8px; background: #e3e8f0; text-align: center; }
+
+    .error { display: none; color: #c62828; font-size: 13px; margin-top: 5px; }
+    #sukses {
+      display: none; margin-top: 16px; padding: 12px;
+      background: #eaf6ec; border: 1px solid #2e7d32; border-radius: 10px; color: #2e7d32;
+    }
+
+    /* Menu navigasi antar halaman */
+    .menu {
+      display: flex; justify-content: center; gap: 8px;
+      width: fit-content; margin: 0 auto 28px; padding: 6px;
+      background: #fff; border-radius: 999px;
+      box-shadow: 0 2px 10px rgba(30, 60, 114, 0.12);
+    }
+    .menu a {
+      padding: 9px 20px; border-radius: 999px;
+      color: #1e3c72; text-decoration: none; font-weight: 600; font-size: 15px;
+      transition: background 0.25s, color 0.25s;
+    }
+    .menu a:hover { background: #eaf0fb; }
+    .menu a.aktif { background: #1e3c72; color: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- Menu navigasi -->
+  <nav class="menu">
+    <a href="Profil_Interaktif.html" class="aktif">👤 Profil</a>
+    <a href="Keranjang_Belanja.html">🛒 Belanja</a>
+  </nav>
+
+  <div class="kartu" id="kartuProfil">
+
+    <!-- Kiri: data profil + dua tombol pilihan -->
+    <div class="kiri">
+      <div id="infoProfil">
+        <div class="atas">
+          <div class="avatar" id="inisial">AP</div>
+          <div>
+            <h1 id="nama-profil">Andi Pratama</h1>
+            <p id="jabatan">Front-End Developer</p>
+          </div>
+        </div>
+        <p class="info" id="lokasi">📍 Jakarta, Indonesia</p>
+        <p class="info" id="email-profil">✉️ andi@example.com</p>
+      </div>
+
+      <div class="tombol">
+        <button type="button" id="btnUbah">✏️ Ubah Profil</button>
+        <button type="button" id="btnPesan">💬 Tinggalkan Pesan</button>
+      </div>
+    </div>
+
+    <!-- Kanan: muncul di samping profil saat tombol diklik -->
+    <div class="kanan">
+
+      <!-- Form Ubah Profil -->
+      <div class="isi" id="panelEdit">
+        <h2>✏️ Ubah Profil</h2>
+        <form id="formEdit">
+          <input type="text" id="eNama" placeholder="Nama">
+          <input type="text" id="eJabatan" placeholder="Jabatan">
+          <input type="text" id="eLokasi" placeholder="Lokasi">
+          <input type="text" id="eEmail" placeholder="Email">
+          <div class="error" id="errEdit">Semua kolom wajib diisi, nama minimal 3 karakter, dan email harus valid!</div>
+          <button type="submit" class="btn-utama">Simpan</button>
+          <button type="button" class="btn-abu" id="btnBatal">Batal</button>
+        </form>
+      </div>
+
+      <!-- Form Tinggalkan Pesan -->
+      <div class="isi" id="panelPesan">
+        <h2>💬 Tinggalkan Pesan</h2>
+        <form id="formPesan">
+          <input type="text" id="nama" placeholder="Nama Anda">
+          <div class="error" id="errNama">Nama minimal 3 karakter!</div>
+
+          <input type="text" id="email" placeholder="Email Anda">
+          <div class="error" id="errEmail">Email harus mengandung @ dan titik!</div>
+
+          <textarea id="pesan" rows="4" placeholder="Tulis pesan Anda di sini (minimal 10 karakter)"></textarea>
+          <div class="error" id="errPesan">Pesan minimal 10 karakter!</div>
+
+          <button type="submit" class="btn-utama">➤ Kirim</button>
+        </form>
+        <div id="sukses"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+
+      // Data profil saat ini
+      var data = { nama: "Andi Pratama", jabatan: "Front-End Developer",
+                   lokasi: "Jakarta, Indonesia", email: "andi@example.com" };
+
+      // Email valid jika mengandung @ dan titik
+      function emailValid(e) { return e.indexOf("@") !== -1 && e.indexOf(".") !== -1; }
+
+      var terbuka = false; // apakah area form di samping sedang terbuka
+
+      // Buka form di samping (melebar), ganti form (fade), atau tutup (target = null)
+      function ganti(target, tombol) {
+        $(".tombol button").removeClass("aktif");
+        if (tombol) { $(tombol).addClass("aktif"); }
+
+        if (!target) {                       // tutup: area menyempit lalu form disembunyikan
+          terbuka = false;
+          $(".isi:visible").stop(true, true).fadeOut(200);
+          $(".kanan").stop(true).animate({ width: 0 }, 450, function () { $(".isi").hide(); });
+        } else if (!terbuka) {               // buka: area melebar ke samping
+          terbuka = true;
+          $(".isi").hide();
+          $(target).fadeIn(600);            // form memudar masuk sambil area melebar
+          $(".kanan").stop(true).animate({ width: 376 }, 450);
+        } else {                             // sudah terbuka: form lama memudar, form baru muncul
+          $(".isi:visible").stop(true, true).fadeOut(200, function () { $(target).fadeIn(300); });
+        }
+      }
+
+      // ===== Hover pada kartu: bayangan menebal dan kartu sedikit terangkat =====
+      $("#kartuProfil").hover(
+        function () { $(this).css({ "box-shadow": "0 10px 28px rgba(30, 60, 114, 0.22)", "transform": "translateY(-3px)" }); },
+        function () { $(this).css({ "box-shadow": "0 4px 18px rgba(30, 60, 114, 0.12)", "transform": "translateY(0)" }); }
+      );
+
+      // ===== Tombol Ubah Profil =====
+      $("#btnUbah").click(function () {
+        if ($("#panelEdit").is(":visible")) { ganti(null); return; } // klik lagi = tutup
+
+        $("#eNama").val(data.nama);
+        $("#eJabatan").val(data.jabatan);
+        $("#eLokasi").val(data.lokasi);
+        $("#eEmail").val(data.email);
+        $("#errEdit").hide();
+        ganti("#panelEdit", this);
+      });
+
+      // ===== Tombol Tinggalkan Pesan =====
+      $("#btnPesan").click(function () {
+        if ($("#panelPesan").is(":visible")) { ganti(null); return; }
+        ganti("#panelPesan", this);
+      });
+
+      $("#btnBatal").click(function () { ganti(null); });
+
+      // ===== Simpan perubahan profil =====
+      $("#formEdit").submit(function (event) {
+        event.preventDefault();
+
+        var nama    = $("#eNama").val().trim();
+        var jabatan = $("#eJabatan").val().trim();
+        var lokasi  = $("#eLokasi").val().trim();
+        var email   = $("#eEmail").val().trim();
+
+        if (nama.length < 3 || jabatan === "" || lokasi === "" || !emailValid(email)) {
+          $("#errEdit").show();
+          return;
+        }
+
+        data = { nama: nama, jabatan: jabatan, lokasi: lokasi, email: email };
+
+        // Inisial avatar: huruf pertama dari maksimal dua kata
+        var kata = nama.split(" ");
+        var inisial = kata[0].charAt(0) + (kata.length > 1 ? kata[1].charAt(0) : "");
+
+        // Info profil memudar, isinya diperbarui, lalu muncul lagi
+        $("#infoProfil").fadeOut(200, function () {
+          $("#inisial").text(inisial.toUpperCase());
+          $("#nama-profil").text(nama).css("color", "#3b6fd1");
+          $("#jabatan").text(jabatan);
+          $("#lokasi").text("📍 " + lokasi);
+          $("#email-profil").text("✉️ " + email);
+          $("#infoProfil").fadeIn(300);
+        });
+
+        ganti(null);
+      });
+
+      // ===== Validasi form pesan =====
+      $("#formPesan").submit(function (event) {
+        event.preventDefault();
+
+        var nama  = $("#nama").val().trim();
+        var email = $("#email").val().trim();
+        var pesan = $("#pesan").val().trim();
+        var valid = true;
+
+        if (nama.length < 3) { $("#errNama").show(); valid = false; }
+        else { $("#errNama").hide(); }
+
+        if (!emailValid(email)) { $("#errEmail").show(); valid = false; }
+        else { $("#errEmail").hide(); }
+
+        if (pesan.length < 10) { $("#errPesan").show(); valid = false; }
+        else { $("#errPesan").hide(); }
+
+        if (valid) {
+          $("#sukses").html("✅ <b>Pesan berhasil dikirim.</b> Terima kasih!");
+          // Muncul dengan efek slide, tampil 2 detik, lalu menutup lagi
+          $("#sukses").stop(true, true).slideToggle(250).delay(2000).slideToggle(250);
+          $("#formPesan").trigger("reset");
+        } else {
+          $("#sukses").hide();
+        }
+      });
+
+    });
+  </script>
+
+</body>
+</html>

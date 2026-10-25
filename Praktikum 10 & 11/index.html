@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuNgantuk - Toko Tanaman Hias & Berkebun</title>
+    <!-- CDN jQuery & jQuery Validation Plugin -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">🌿 BuNgantuk</a>
+            <ul class="nav-list">
+                <li><a href="#beranda">Beranda</a></li>
+                <li class="dropdown">
+                    <button class="dropdown-btn" type="button">Katalog ▾</button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#katalog">Indoor Plant</a></li>
+                        <li><a href="#katalog">Outdoor Plant</a></li>
+                        <li><a href="#katalog">Pot & Media</a></li>
+                    </ul>
+                </li>
+                <li><a href="#tentang">Tentang</a></li>
+                <li><a href="#pesan">Pesan Cepat</a></li>
+                <li><a href="#member">Daftar Member</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="beranda" class="hero">
+        <div class="container">
+            <h1>Bawa Kesegaran Alam ke Rumah Anda</h1>
+            <p>Pilihan tanaman hias terbaik untuk mempercantik ruangan dan menyegarkan udara.</p>
+        </div>
+    </header>
+
+    <!-- KATALOG / TAB SECTION -->
+    <section id="katalog" class="container">
+        <h2>Katalog Tanaman Hias</h2>
+        <div class="tabs">
+            <button class="tab active" type="button" data-target="#tab-indoor">Indoor Plant</button>
+            <button class="tab" type="button" data-target="#tab-outdoor">Outdoor Plant</button>
+            <button class="tab" type="button" data-target="#tab-media">Media & Pot</button>
+        </div>
+
+        <!-- Tab 1: Indoor -->
+        <div id="tab-indoor" class="tab-panel menu-grid">
+            <div class="menu-card">
+                <h3>Monstera Deliciosa</h3>
+                <p>Tanaman hias dengan daun berlubang estetik yang sangat populer untuk dekorasi sudut ruangan.</p>
+                <div class="price">Rp 75.000</div>
+            </div>
+            <div class="menu-card">
+                <h3>Snake Plant (Lidah Mertua)</h3>
+                <p>Tanaman tangguh penyaring udara kotor di dalam ruangan, minim perawatan.</p>
+                <div class="price">Rp 45.000</div>
+            </div>
+        </div>
+
+        <!-- Tab 2: Outdoor -->
+        <div id="tab-outdoor" class="tab-panel menu-grid" style="display: none;">
+            <div class="menu-card">
+                <h3>Bunga Mawar Merah</h3>
+                <p>Mawar segar pilihan dengan warna merah cerah, cocok menghiasi halaman rumah.</p>
+                <div class="price">Rp 35.000</div>
+            </div>
+            <div class="menu-card">
+                <h3>Kaktus Mini Sukulen</h3>
+                <p>Tanaman tahan panas berukuran kecil yang unik dan manis untuk teras rumah.</p>
+                <div class="price">Rp 25.000</div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Media & Pot -->
+        <div id="tab-media" class="tab-panel menu-grid" style="display: none;">
+            <div class="menu-card">
+                <h3>Pot Tanah Liat Estetik</h3>
+                <p>Pot natural berpori baik untuk kesehatan akar tanaman kesayangan Anda.</p>
+                <div class="price">Rp 20.000</div>
+            </div>
+            <div class="menu-card">
+                <h3>Media Tanam Sekam Bakar</h3>
+                <p>Campuran tanah subur dan sekam organik siap pakai untuk pertumbuhan optimal.</p>
+                <div class="price">Rp 15.000</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TENTANG KAMI -->
+    <section id="tentang" style="background:#fff; padding: 60px 0;">
+        <div class="container" style="max-width: 700px; text-align: center;">
+            <h2>Tentang BuNgantuk</h2>
+            <p>BuNgantuk hadir sejak 2026 sebagai wadah bagi pencinta tanaman untuk mendapatkan bibit berkualitas langsung dari petani lokal terpercaya. Kami berkomitmen menghadirkan hijaunya alam ke setiap sudut rumah Anda.</p>
+        </div>
+    </section>
+
+    <!-- FORM PEMESANAN (Kompleks > 5 Input) -->
+    <section id="pesan" class="form-section">
+        <div class="container">
+            <h2>Form Pesanan Tanaman</h2>
+            <form id="formPesan" class="form-box" novalidate>
+                <div class="form-group">
+                    <label for="nama">Nama Pemesan</label>
+                    <input type="text" id="nama" class="field wajib" placeholder="Masukkan nama lengkap">
+                    <div class="hint">Nama diperlukan untuk konfirmasi pesanan.</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Aktif</label>
+                    <input type="email" id="email" class="field wajib" placeholder="nama@domain.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="hp">Nomor WhatsApp / HP</label>
+                    <input type="text" id="hp" class="field wajib" placeholder="10-12 digit angka">
+                </div>
+
+                <div class="form-group">
+                    <label for="pilihTanaman">Pilih Tanaman / Produk</label>
+                    <select id="pilihTanaman" class="field wajib">
+                        <option value="">-- Pilih Produk --</option>
+                        <option>Monstera Deliciosa</option>
+                        <option>Snake Plant (Lidah Mertua)</option>
+                        <option>Bunga Mawar Merah</option>
+                        <option>Kaktus Mini Sukulen</option>
+                        <option>Pot Tanah Liat Estetik</option>
+                        <option>Media Tanam Sekam Bakar</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat Pengiriman Lengkap</label>
+                    <input type="text" id="alamat" class="field wajib" placeholder="Jalan, Nomor Rumah, Kecamatan">
+                </div>
+
+                <div class="form-group">
+                    <label for="catatan">Catatan Tambahan (Opsional)</label>
+                    <input type="text" id="catatan" class="field" placeholder="Contoh: Kirim sore hari">
+                </div>
+
+                <button type="submit" class="btn">Kirim Pesanan Sekarang</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 BuNgantuk | Chelsea Zalianti - Praktikum Pemrograman Web Dasar</p>
+    </footer>
+
+    <!-- UTILITY (Toast & Back to Top) -->
+    <div id="toast"></div>
+    <button id="backToTop" type="button" aria-label="Kembali ke atas">&#8593;</button>
+
+    <!-- HUBUNGKAN DENGAN JAVASCRIPT TERPISAH -->
+    <script src="script.js"></script>
+</body>
+</html>
